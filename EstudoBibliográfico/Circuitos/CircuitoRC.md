@@ -52,3 +52,13 @@ $$Ic + Ir =0=\frac{C*dv}{dt}+\frac{V}{R} = 0$$
 $$  \frac{C*dv}{dt} + \frac{V}{R} = 0 $$  
 
 
+- Resolvendo a EDO:
+
+$$  \frac{C*dv}{dt} + \frac{V}{R} = 0 $$  
+
+
+$$ \frac{dv}{dt} = - \frac{V}{R*C} $$
+
+
+$$ \therefore $$ $$ \frac{dv}{v} = - \frac{dt}{R*C}
+
