@@ -89,6 +89,21 @@ Logo teremos a função V(t):
 
 $$  V(t) = e^{\frac{-t}{RC}} * A  $$
 
+Podemos idenificar a consta A como Vo.
+
+Portanto teremos:
+
+$$  V(t) = Voe^{\frac{-t}{RC}}  $$
+
+
+- Analisando a corrente I(t):
+
+$$  I(t) = \frac{V(t)}{R} = \frac{Voe^{\frac{-t}{RC}}}{R} $$
+
+
+- Analisando a potência:
+
+$$  P(t) = V(t)*I(t) = \frac{Vo^2e^{\frac{-2t}{RC}}}{R}  $$
 
 
 
