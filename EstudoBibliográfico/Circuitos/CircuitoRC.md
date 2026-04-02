@@ -117,7 +117,7 @@ $$  W(t) = \int_{0}^{t} P(t) dt  = \int_{0}^{t} \frac{Vo^2e^{\frac{-2t}{RC}}}{R}
 
 Resolvendo a integral apresentada, teremos:
 
-$$  W(t) = \frac{CV^2}{2}*(1 - e^{-2t}{RC})  $$
+$$  W(t) = \frac{CV^2}{2}*(1 - e^{\frac{-2t}{RC}})  $$
 
 
 
