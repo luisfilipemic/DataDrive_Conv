@@ -105,6 +105,23 @@ $$  I(t) = \frac{V(t)}{R} = \frac{Voe^{\frac{-t}{RC}}}{R} $$
 
 $$  P(t) = V(t)*I(t) = \frac{Vo^2e^{\frac{-2t}{RC}}}{R}  $$
 
+- Energia absorvida pelo resistor:
+
+$$ W(t) = \int_{0}^{t} P(t) dt $$
+
+
+portanto:
+
+$$  W(t) = \int_{0}^{t} P(t) dt  = \int_{0}^{t} \frac{Vo^2e^{\frac{-2t}{RC}}}{R} dt  $$  
+
+
+Resolvendo a integral apresentada, teremos:
+
+$$  W(t) = \frac{CV^2}{2}*(1 - e^{-2t}{RC})  $$
+
+
+
+
 
 
 
