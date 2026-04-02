@@ -62,3 +62,37 @@ $$ \frac{dv}{dt} = - \frac{V}{R*C} $$
 
 $$ \therefore  \frac{dv}{v} = - \frac{dt}{R*C} $$
 
+
+integrando em ambos os lados, teremos:
+
+
+$$  int \frac{1}{V} \dx = - int \frac{dt}{RC}  $$
+
+
+Após a resolução da integral, teremos:
+
+$$ ln(v) = - \frac{t}{RC} + K  $$
+
+OBS.:
+K é definida como sendo a constante de integração, substituiremos por ln(A), para fins de operação matemática.
+
+$$  ln(v) = - \frac{t}{RC} + ln(A)  \therefore  ln(\frac{t}{A}) = - \frac{t}{RC} $$
+
+
+Portanto:
+
+$$ e^(\frac{-t}{RC} = \frac{V}{A}) $$
+
+
+
+Logo teremos a função V(t):
+
+$$  V(t) = e^(\frac{-t}{RC} * A  $$
+
+
+
+
+
+
+
+
