@@ -66,7 +66,7 @@ $$ \therefore  \frac{dv}{v} = - \frac{dt}{R*C} $$
 integrando em ambos os lados, teremos:
 
 
-$$  int \frac{1}{V}dx = - int \frac{dt}{RC}  $$
+$$  int \frac{1}{V} \ dx = - int \frac{1}{RC} \ dt  $$
 
 
 Após a resolução da integral, teremos:
