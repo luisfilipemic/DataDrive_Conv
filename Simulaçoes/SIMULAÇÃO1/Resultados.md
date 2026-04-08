@@ -33,7 +33,7 @@ Ref.: Eletrônica de Potência: Dispositivos, Circuitos e Aplicações. Muhammad
  #### Sinais de corrente na carga:
 
 <p align="center">
-  <img src="Corrente.jpeg" width="600" height="600" />
+  <img src="Corrente.jpeg" width="900" height="900" />
   <br>
   <em></em>
 </p>
@@ -42,7 +42,7 @@ Ref.: Eletrônica de Potência: Dispositivos, Circuitos e Aplicações. Muhammad
  #### Sinais de tensão na carga:
 
 <p align="center">
-  <img src="tensão.jpeg" width="600" height="600" />
+  <img src="tensão.jpeg" width="900" height="900" />
   <br>
   <em></em>
 </p>
