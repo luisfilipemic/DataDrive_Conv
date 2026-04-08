@@ -11,9 +11,41 @@ Ref.: Eletrônica de Potência: Dispositivos, Circuitos e Aplicações. Muhammad
 
 ### Resultados:
 
+- circuito:
 <p align="center">
-  <img src="sim.1.jpeg" width="500" height="500" />
+  <img src="sim.1.jpeg" width="600" height="600" />
   <br>
   <em></em>
 </p>
+
+- Parametrização capacitor
+ 
+ $$ Capacitancia = Co = 0.0027F $$
+
+ - Parametrização indutor
+
+ $$ Indultancia = Lo = 0.0126H $$
+
+ #### Sinais Pulse generator:
+
+
+
+ #### Sinais de corrente na carga:
+
+<p align="center">
+  <img src="Corrente.jpeg" width="600" height="600" />
+  <br>
+  <em></em>
+</p>
+
+
+ #### Sinais de tensão na carga:
+
+<p align="center">
+  <img src="tensão.jpeg" width="600" height="600" />
+  <br>
+  <em></em>
+</p>
+
+
 
