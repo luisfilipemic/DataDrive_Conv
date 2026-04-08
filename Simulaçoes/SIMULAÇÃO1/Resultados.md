@@ -38,6 +38,14 @@ Ref.: Eletrônica de Potência: Dispositivos, Circuitos e Aplicações. Muhammad
   <em></em>
 </p>
 
+- leitura corrente de saída na carga (Io):
+
+<p align="center">
+  <img src="Leituracorrente.jpeg" width="900" height="900" />
+  <br>
+  <em></em>
+</p>
+
 
  #### Sinais de tensão na carga:
 
@@ -47,5 +55,12 @@ Ref.: Eletrônica de Potência: Dispositivos, Circuitos e Aplicações. Muhammad
   <em></em>
 </p>
 
+- Leitura tensão de saída na carga (Vo):
+
+<p align="center">
+  <img src="Leitura tensão.jpeg" width="900" height="900" />
+  <br>
+  <em></em>
+</p>
 
 
