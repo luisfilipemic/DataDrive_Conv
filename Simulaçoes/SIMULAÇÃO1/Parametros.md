@@ -14,12 +14,13 @@ Título: Parametros simulação 1 - conversor buck
 |-------------------|------------------|--------------------------|---------------------------|
 | 30V               | 9V               | 90W                      | 500 Hz                    |
 
-Ondulação de corrente(RIPPLE) no indutor:
+Ondulação de corrente(RIPPLE) no indutor:  
+
 $$ \delta Il = 10% $$   
 
 Ondulação de Tensão no capacitor:
 
-$$ \deltal Vc = 10% $$  
+$$ \delta Vc = 10% $$  
 
 Cálculos:
 
