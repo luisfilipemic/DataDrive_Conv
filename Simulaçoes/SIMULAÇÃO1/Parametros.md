@@ -67,7 +67,16 @@ $$ Vmax = Vin = 30V $$
 Dimensões do interrupitor devem ser especificados com base nos valor de corrente máxima(Vsmax) e tensão máxima(Vmax).
 
 
-### Resultados:
+### MODELOS CHAVE.
+
+| Modelo   | Tipo | Vds Máx (Volts) | Id Contínua (A) | Rds(on) (Ω) | Observação                  |
+|----------|------|-----------------|-----------------|-------------|-----------------------------|
+| IRFZ44N  | N    | 55              | 49              | 0,022       | Muito usado em fontes DC/DC |
+| IRLZ34N  | N    | 55              | 30              | 0,035       | Logic-level, ideal para 5V  |
+| STP55NF06| N    | 60              | 55              | 0,018       | Boa margem para 30V          |
+| IRF3205  | N    | 55              | 110             | 0,008       | Excelente para alta corrente |
+| AOI518   | N    | 30              | 40              | 0,004       | MOSFET de baixa tensão       |
+
 
 
 

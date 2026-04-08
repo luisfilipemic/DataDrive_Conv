@@ -7,6 +7,7 @@
 
 Título: Parametros simulação 1 - conversor buck
 Ref.: Eletrônica de Potência: Dispositivos, Circuitos e Aplicações. Muhammad H. Rashid (Autor)
+Software de simulação: MATLAB E SIMULINK.
 
 
 ### Resultados:
