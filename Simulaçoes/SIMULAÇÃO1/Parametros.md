@@ -16,11 +16,11 @@ Título: Parametros simulação 1 - conversor buck
 
 Ondulação de corrente(RIPPLE) no indutor:  
 
-$$ \delta Il = 10% $$   
+$$ \Delta Il = 10% $$   
 
 Ondulação de Tensão no capacitor:
 
-$$ \delta Vc = 10% $$  
+$$ \Delta Vc = 10% $$  
 
 Cálculos:
 
@@ -30,7 +30,22 @@ $$ Io = \frac{Po}{Vo} = \frac{90w}{9V} = 10A $$
 
 - Resistência de Carga(Ro):
 
-$$ Ro = \frac{Vo^2}{Po} = \frac{9^2}{90} = 0.9\ohm $$
+$$ Ro = \frac{Vo^2}{Po} = \frac{9^2}{90} = 0.9\ohm $$  
+
+- Indutor de saída(Lo):
+
+$$ Lo = \frac{Vo\cdot(Vin - Vo)}{f\cdot \Delta Il \cdot Vin} $$  
+
+$$ \therefore Lo = \frac{(30-9)\cdot9}{30\cdot 500\cdot (0.1\cdot 10)} = 0.0126H $$  
+
+- Capacitor de saída(Co):
+
+$$ Co = \frac{\Delta Il}{8\cdot f\cdot \Delta Vc} $$  
+
+$$ \therefore Co = \frac{1}{360} = 0.0027F $$  
+
+
+
 
 
 
