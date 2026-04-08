@@ -41,7 +41,7 @@ Ref.: Eletrônica de Potência: Dispositivos, Circuitos e Aplicações. Muhammad
 - leitura corrente de saída na carga (Io):
 
 <p align="center">
-  <img src="Leituracorrente.jpeg" width="900" height="900" />
+  <img src="Leituracorrente.jpeg" width="600" height="600" />
   <br>
   <em></em>
 </p>
@@ -58,7 +58,7 @@ Ref.: Eletrônica de Potência: Dispositivos, Circuitos e Aplicações. Muhammad
 - Leitura tensão de saída na carga (Vo):
 
 <p align="center">
-  <img src="Leitura tensão.jpeg" width="900" height="900" />
+  <img src="Leitura tensão.jpeg" width="600" height="600" />
   <br>
   <em></em>
 </p>
