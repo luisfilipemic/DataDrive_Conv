@@ -34,3 +34,11 @@ Certifique-se de ter o Conda instalado e as permissões de script habilitadas no
 ```powershell
 # Executar como Administrador se necessário
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+## 📂 Como realziar a leitura dos relatórios:
+
+BUCK_assuntodorelatorio.data.ipynb
+
+cada relatorio conterá o assunto abordado e sua respectiva data
+
+

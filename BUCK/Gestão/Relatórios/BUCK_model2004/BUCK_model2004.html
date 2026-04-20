@@ -40,6 +40,35 @@ ul.task-list li input[type="checkbox"] {
 <link href="BUCK_model2004_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="BUCK_model2004_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -87,7 +116,18 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="fundamentação-teórica." class="level2">
 <h2 class="anchored" data-anchor-id="fundamentação-teórica.">2. Fundamentação teórica.</h2>
-<p>A partir da modelagem matemática obtem-se o modelo no espaço de estados.</p>
+<p>Qualquer equação diferencial linear ou não linear de enésima ordem de uma variável dependente do tempo pode ser escrita26 como n equações diferenciais de primeira ordem com n variáveis dependentes do tempo x1 até xn . Consideremos, por exemplo, a seguinte equação de terceira ordem:</p>
+<p><span class="math display">\[
+\begin{equation}
+y^m+a2y^n+a1y′+a0=0
+\end{equation}
+\]</span></p>
+<p>em que y é a primeira derivada de y, y = (d/dt)y. Tomemos y como x1 . Então, a Equação 1 pode ser representada pelas três equações</p>
+<p><span class="math display">\[x1′=x2\]</span></p>
+<p><span class="math display">\[x″2 =x3\]</span></p>
+<p><span class="math display">\[x″3 = - a0x1 - a1x2 - a3x3\]</span></p>
+<p>Em cada caso, n condições iniciais precisam ser conhecidas antes que se possa encontrar uma solução exata. Para qualquer sistema de enésima ordem, um conjunto de n variáveis independentes é necessário e suficiente para descrevê-lo completamente. As variáveis x1 , x2 , …, xn são chamadas de variáveis de estado para o sistema. Se as condições iniciais de um sistema linear são conhecidas no tempo t0 , então podemos encontrar os estados dos sistemas para todo tempo t t0 e para determinado conjunto de fontes de entrada.(Muhammad H. Rashid. Power eletronics)</p>
+<p>Portanto:</p>
 <hr>
 <ol type="1">
 <li>Definir variáveis de estado.</li>
@@ -95,6 +135,109 @@ ul.task-list li input[type="checkbox"] {
 <li>Definição do modelo médio.</li>
 </ol>
 <hr>
+<section id="definição-das-variaveis-de-estado" class="level3">
+<h3 class="anchored" data-anchor-id="definição-das-variaveis-de-estado">1° Definição das variaveis de estado</h3>
+<p>As principais variaveis que determinam o estado dinamico do conversor buck são:</p>
+<ul>
+<li>variação de corrente no indutor = x1;</li>
+<li>variação de tensão no capacitor = x2;</li>
+</ul>
+</section>
+</section>
+<section id="resultados-e-discursões" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-e-discursões">Resultados e discursões</h2>
+<p><strong>Equação de estado estado(1):</strong>(chave fechada)</p>
+<p><span class="math display">\[\begin{cases}
+x1' = \frac{U1}{L} - \frac{x2}{L} \\
+x2' = \frac{x1}{C} - \frac{x2}{R\cdot C}
+\end{cases}\]</span></p>
+<p>Definido por:</p>
+<p><span class="math display">\[X' = A1\cdot x + B1U\]</span></p>
+<p>$$</p>
+<span class="math display">\[\begin{bmatrix}
+x1' \\
+x2'
+\end{bmatrix}\]</span>
+=
+<span class="math display">\[\begin{bmatrix}
+0 &amp; -\frac{1}{L} \\
+\frac{1}{C} &amp; -\frac{1}{RC}
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}\]</span>
++
+<span class="math display">\[\begin{bmatrix}
+\frac{1}{L} \\
+0
+\end{bmatrix}\]</span>
+<p>U1(t)</p>
+<p>$$</p>
+<hr>
+<p><strong>Equação de estado estado(2):</strong>(chave aberta)</p>
+<p><span class="math display">\[\begin{cases}
+x1' = \frac{-x2}{L}  \\
+x2' = \frac{x1}{C} - \frac{x2}{R\cdot C}
+\end{cases}\]</span></p>
+<p>Definido por:</p>
+<p><span class="math display">\[X' = A2\cdot x + B2U\]</span></p>
+<p>$$</p>
+<span class="math display">\[\begin{bmatrix}
+x1' \\
+x2'
+\end{bmatrix}\]</span>
+=
+<span class="math display">\[\begin{bmatrix}
+0 &amp; -\frac{1}{L} \\
+\frac{1}{C} &amp; -\frac{1}{RC}
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}\]</span>
+<ul>
+<li><span class="math display">\[\begin{bmatrix}
+0 \\
+0
+\end{bmatrix}\]</span>
+U1(t)</li>
+</ul>
+<p>$$</p>
+<hr>
+<ol start="3" type="1">
+<li>Definição do modelo médio.</li>
+</ol>
+<p>Definição:</p>
+<p><span class="math display">\[ M = k\cdot M1 + (1-k)\cdot M2\]</span></p>
+<p>Portanto, para definição do modelo médio:</p>
+<p><span class="math display">\[ M1 = k\cdot A1 + (1-k)\cdot A2\]</span></p>
+<p><span class="math display">\[ M2 = k\cdot B1 + (1-k)\cdot B2\]</span></p>
+<p>Obtem-se:</p>
+<p>$$</p>
+Mmédio =
+<span class="math display">\[\begin{bmatrix}
+x1' \\
+x2'
+\end{bmatrix}\]</span>
+=
+<span class="math display">\[\begin{bmatrix}
+0 &amp; -\frac{1}{L} \\
+\frac{1}{C} &amp; -\frac{1}{RC}
+\end{bmatrix}
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}\]</span>
+<ul>
+<li><span class="math display">\[\begin{bmatrix}
+\frac{K}{L} \\
+0
+\end{bmatrix}\]</span>
+U1(t)</li>
+</ul>
+<p>$$</p>
+<p>Referencias: Muhammad H. Rashid. (2014). Power eletronics, circuits, devices, and applications (Kelly Tavares, Silvana Afonso, &amp; Sabrina Levensteinas, Eds.; Leonardo&nbsp; Abramowicz, Trans.; 4. ed, Vol. 1). São Paulo: Pearson Education do Brasil, 2014.</p>
 </section>
 
 </main>
