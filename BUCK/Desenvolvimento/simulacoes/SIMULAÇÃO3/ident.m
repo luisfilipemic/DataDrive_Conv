@@ -12,13 +12,15 @@ R = 1.0;
 
 num = Vs/(C*L);
 den = [1,1/(C*R) , 1/(C*L)];
-G = tf(num,den);
+Gs = tf(num,den);
 
 load("DataIdent.mat")
 Nd = 2000;
 t = DadosBuck(1,Nd:end-1);
 u = DadosBuck(2,Nd:end-1);
 v = DadosBuck(3,Nd:end-1);
+
+
 
 %Médias de entrada e saída, respectivamente
 mu_u = mean(u);
@@ -34,6 +36,7 @@ plot(t,u, LineWidth=1.4), grid on
 subplot(212)
 plot(t,v, LineWidth=1.4), grid on
 
+%Construção matricial - regressores
 Ns = numel(t);
 
 A = zeros(Ns-3,4);
@@ -62,14 +65,26 @@ plot(y,'r')
 hold off
 grid on
 
-
 Result = A * theta;
-
 
 figure(3)
 plot(Result)
 
-num1 = [b1, b2];
-den1 = [1, a1, a2];
+num2 = [b1 b2];
+den2 = [1 a1 a2];
 
+load("Datamodelo.mat")
+v1 = Dadosmodeloideal(2,Nd:end-1);
+
+mu_v1 = mean(v1);
+v1 = v1 - mu_v1;
+y = transpose(v1);
+
+
+figure(4)
+plot(ys)
+hold on
+plot(v1,'r')
+hold off
+grid on
 

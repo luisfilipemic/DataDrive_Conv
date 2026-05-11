@@ -1,7 +1,7 @@
 clear, clc
 %Parametros SIMULINK
 %Frequencia de chaveamento e ciclo de trabalho
-Fs = 1000;
+Fs = 500;
 d = 0.3;
 Tpwm = 1/Fs;
 Tsim = Tpwm/100;
