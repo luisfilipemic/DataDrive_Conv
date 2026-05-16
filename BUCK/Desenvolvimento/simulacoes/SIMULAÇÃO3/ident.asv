@@ -78,19 +78,19 @@ end
 %Comparação ARX VS saída do sistema.
 figure(2)
 plot(ys)
+legend('ARX');
 hold on
 plot(y,'r')
-legend('ARX','Saída do sistema real');
+legend('Saída real');
 hold off
 grid on
-title('ARX VS saída do sistema real');
+title('ARX VS saída do sistema');
 
 
 Result = A * theta;
 
 figure(3)
 plot(Result)
-title('Saída ARX');
 
 load("Datamodelo.mat")
 v1 = Dadosmodeloideal(2,Nd:end-1);
@@ -105,7 +105,6 @@ figure(4)
 plot(ys)
 hold on
 plot(v1,'r')
-legend('ARX', 'Espaço de estados');
 hold off
 grid on
 title('ARX VS saída Espaço de estados');
@@ -115,7 +114,6 @@ e = y - ys;
 
 figure(5)
 plot(e)
-title('Sinal de ERRO');
 
 
 
