@@ -35,3 +35,6 @@ xlabel('Tempo (s)');
 ylabel('Tensão');
 title('Comparação modelo/sistemaReal');
 legend('Modelo', 'Tensão na carga');
+
+
+

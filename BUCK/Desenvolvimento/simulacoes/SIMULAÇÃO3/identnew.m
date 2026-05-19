@@ -117,5 +117,17 @@ figure(5)
 plot(e)
 title('Sinal de ERRO');
 
+% Modelo ARX - Discreto 
+
+[B, A] = c2d(Gs, Tsim ,'tustin')
+
+B = [2.20050890435928e-05,4.40101780871856e-05,2.20050890435928e-05];
+A = [1,-1.99630021102880,0.996303145040676];
+
+Be = [0, b1, b2]
+Ae = [1, -a1, -a2]
+
+Gz = tf(B, A, Tpwm);
+Gze = tf(Be, Ae, Tpwm)
 
 
