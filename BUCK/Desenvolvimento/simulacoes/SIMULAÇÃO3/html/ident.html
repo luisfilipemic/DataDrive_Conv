@@ -1,0 +1,304 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>ident</title>
+<meta name="generator" content="MATLAB 23.2">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2026-05-16">
+<meta name="DC.source" content="ident.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">
+<span class="comment">%Identifica&ccedil;&atilde;o ARX conversor BUCK</span>
+<span class="comment">%Luiz Felipe Souza - ufpa</span>
+</pre>
+<p>Equa&ccedil;&otilde;es de diferen&ccedil;as ARX, pode ser definida por:</p>
+<p>
+<img src="ident_eq01853084883099199898.png" alt="$$ y(k) = \sum_{i=1}^{n} aiy(k-i) + \sum_{j=1}^{n} bjy(k-i) $$" style="width:237px;height:43px;"></p>
+<p>
+<img src="ident_eq05922619158447254440.png" alt="$$y(k) = a1\cdot y(k-1) + a2\cdot y(k-2) + b1\cdot u(k-1) + b2\cdot u(k-2)$$" style="width:410px;height:15px;"></p>
+<pre class="codeinput">clear, clc
+<span class="comment">%Parametriza&ccedil;&atilde;o</span>
+Fs = 1000;
+Tpwm = 1/Fs;
+Tsim = Tpwm/100;
+d = 0.3;
+Vs = 30;
+C = 0.0027;
+L = 0.0126;
+R = 1.0;
+
+num = Vs/(C*L);
+den = [1,1/(C*R) , 1/(C*L)];
+Gs = tf(num,den);
+
+<span class="comment">%Importa&ccedil;&atilde;o dos dados de sa&iacute;da e entrada</span>
+load(<span class="string">"DataIdent.mat"</span>)
+Nd = 2000;
+t = DadosBuck(1,Nd:end-1);
+u = DadosBuck(2,Nd:end-1);
+v = DadosBuck(3,Nd:end-1);
+
+
+
+<span class="comment">%M&eacute;dias de entrada e sa&iacute;da, respectivamente</span>
+mu_u = mean(u);
+mu_v = mean(v);
+
+u = u - mu_u;
+v = v - mu_v;
+y = transpose(v);
+
+<span class="comment">%rela&ccedil;&atilde;o gr&aacute;fica de sa&iacute;da e entrada</span>
+figure(1)
+subplot(211)
+plot(t,u, LineWidth=1.4), grid <span class="string">on</span>
+subplot(212)
+plot(t,v, LineWidth=1.4), grid <span class="string">on</span>
+
+<span class="comment">%Constru&ccedil;&atilde;o matricial - regressores</span>
+Ns = numel(t);
+
+A = zeros(Ns-3,4);
+
+<span class="keyword">for</span> n = 3:Ns
+    phi = [y(n-1), y(n-2), u(n-1), u(n-2)];
+    A(n, :) = phi;
+<span class="keyword">end</span>
+
+theta = A\y;
+a1 = theta(1);
+a2 = theta(2);
+b1 = theta(3);
+b2 = theta(4);
+ys = zeros(size(y));
+ys(1:2) = y(1:2);
+
+<span class="keyword">for</span> k = 3:Ns
+    ys(k) = a1*ys(k-1) + a2*ys(k-2) + b1*u(k-1) + b2*u(k-2);
+<span class="keyword">end</span>
+
+<span class="comment">%Compara&ccedil;&atilde;o ARX VS sa&iacute;da do sistema.</span>
+figure(2)
+plot(ys)
+hold <span class="string">on</span>
+plot(y,<span class="string">'r'</span>)
+hold <span class="string">off</span>
+grid <span class="string">on</span>
+
+Result = A * theta;
+figure(3)
+plot(Result)
+
+load(<span class="string">"Datamodelo.mat"</span>)
+v1 = Dadosmodeloideal(2,Nd:end-1);
+
+mu_v1 = mean(v1);
+v1 = v1 - mu_v1;
+y1 = transpose(v1);
+
+
+<span class="comment">%Compara&ccedil;&atilde;o ARX VS Esp&ccedil;o de estados.</span>
+figure(4)
+plot(ys)
+hold <span class="string">on</span>
+plot(v1,<span class="string">'r'</span>)
+hold <span class="string">off</span>
+grid <span class="string">on</span>
+
+<span class="comment">%Erro - modelo arx - sa&iacute;da real</span>
+e = y - ys;
+
+figure(5)
+plot(e)
+</pre>
+<img vspace="5" hspace="5" src="ident_01.png" alt=""> <img vspace="5" hspace="5" src="ident_02.png" alt=""> <img vspace="5" hspace="5" src="ident_03.png" alt=""> <img vspace="5" hspace="5" src="ident_04.png" alt=""> <img vspace="5" hspace="5" src="ident_05.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2023b</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+%Identificação ARX conversor BUCK
+%Luiz Felipe Souza - ufpa
+
+%%
+% Equações de diferenças ARX, pode ser definida por:
+%
+%
+% $$ y(k) = \sum_{i=1}^{n} aiy(k-i) + \sum_{j=1}^{n} bjy(k-i) $$
+% 
+% $$y(k) = a1\cdot y(k-1) + a2\cdot y(k-2) + b1\cdot u(k-1) + b2\cdot u(k-2)$$
+
+%%
+clear, clc
+%Parametrização
+Fs = 1000;
+Tpwm = 1/Fs;
+Tsim = Tpwm/100;
+d = 0.3;
+Vs = 30;
+C = 0.0027;
+L = 0.0126;
+R = 1.0;
+
+num = Vs/(C*L);
+den = [1,1/(C*R) , 1/(C*L)];
+Gs = tf(num,den);
+
+%Importação dos dados de saída e entrada
+load("DataIdent.mat")
+Nd = 2000;
+t = DadosBuck(1,Nd:end-1);
+u = DadosBuck(2,Nd:end-1);
+v = DadosBuck(3,Nd:end-1);
+
+
+
+%Médias de entrada e saída, respectivamente
+mu_u = mean(u);
+mu_v = mean(v);
+
+u = u - mu_u;
+v = v - mu_v;
+y = transpose(v);
+
+%relação gráfica de saída e entrada
+figure(1)
+subplot(211)
+plot(t,u, LineWidth=1.4), grid on
+subplot(212)
+plot(t,v, LineWidth=1.4), grid on
+
+%Construção matricial - regressores
+Ns = numel(t);
+
+A = zeros(Ns-3,4);
+
+for n = 3:Ns
+    phi = [y(n-1), y(n-2), u(n-1), u(n-2)];
+    A(n, :) = phi;
+end
+
+theta = A\y;
+a1 = theta(1);
+a2 = theta(2);
+b1 = theta(3);
+b2 = theta(4);
+ys = zeros(size(y));
+ys(1:2) = y(1:2);
+
+for k = 3:Ns
+    ys(k) = a1*ys(k-1) + a2*ys(k-2) + b1*u(k-1) + b2*u(k-2);
+end
+
+%Comparação ARX VS saída do sistema.
+figure(2)
+plot(ys)
+hold on
+plot(y,'r')
+hold off
+grid on
+
+Result = A * theta;
+figure(3)
+plot(Result)
+
+load("Datamodelo.mat")
+v1 = Dadosmodeloideal(2,Nd:end-1);
+
+mu_v1 = mean(v1);
+v1 = v1 - mu_v1;
+y1 = transpose(v1);
+
+
+%Comparação ARX VS Espço de estados.
+figure(4)
+plot(ys)
+hold on
+plot(v1,'r')
+hold off
+grid on
+
+%Erro - modelo arx - saída real
+e = y - ys;
+
+figure(5)
+plot(e)
+
+
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>

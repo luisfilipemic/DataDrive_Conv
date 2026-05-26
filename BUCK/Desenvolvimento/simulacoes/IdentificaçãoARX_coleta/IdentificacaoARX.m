@@ -10,7 +10,7 @@
 
 
 clear, clc
-%Parametrização
+%Parametrização 
 Fs = 1000;
 Ts = 1.5e-3;
 d = 0.3;
