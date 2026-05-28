@@ -12,11 +12,7 @@ Este repositório contém os estudos, modelagens matemáticas e simulações des
 De acordo com a organização do workspace:
 
 * **📁 BUCK**: Diretório principal dos estudos do conversor abaixador.
-    * **📁 Desenvolvimento**: Códigos de teste, scripts preliminares, simulações.slx, parametros de software.
-    * **📁 Gestão**: Plano de trabalho, Relatórios e Bibliografias de estudo
-    * **📁 Modelagem**: Notebooks principais com toda modelagem do projeto
-    * **📁 Results**: Resultados das simulações, gráficos e relatórios exportados.
-    * **📁 SistemaReal**: Modelagem focada em parâmetros de componentes reais e hardware.
+
 * **📄 .all-contributorsrc.ipynb**: Controle de contribuições e histórico do projeto.
 
 ## 🛠️ Tecnologias e Ferramentas
