@@ -11,14 +11,13 @@
 
 clear, clc
 %Parametrização 
-Fs = 1000;
+Fs = 20000;
 Ts = 2.0e-5;
 d = 0.3;
 Vs = 30;
 C = 0.000041666667;
-L = 0.000525000000;
+L = 0.000470;
 R = 1.0;
-
 num = Vs/(C*L);
 den = [1,1/(C*R) , 1/(C*L)];
 Gs = tf(num,den);
@@ -31,8 +30,6 @@ u = DadosBuck(2,Nd:end-1);
 v = DadosBuck(3,Nd:end-1);
 %%
 
-
-% Médias de entrada e saída, respectivamente
 mu_u = mean(u);
 mu_v = mean(v);
 
