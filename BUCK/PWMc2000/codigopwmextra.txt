@@ -1,0 +1,35 @@
+/*
+ * main.c
+ */
+
+#include "Perifericos_setup.h"
+
+int main(void){
+    // 1. Declare variáveis no início do bloco
+    volatile uint32_t count = 0;
+
+    InitSysCtrl();                          // Inicializa Clocks básicos da placa
+
+    DINT;                                   // Desabilita interrupções globais
+    InitPieCtrl();
+    IER = 0x0000;
+    IFR = 0x0000;
+    InitPieVectTable();
+
+    // Inicialização do Hardware
+    Setup_GPIO();
+    Setup_ePWM();
+
+    // Estado inicial dos LEDs
+    GpioDataRegs.GPBDAT.bit.GPIO34 = 1;     // LED Vermelho
+    GpioDataRegs.GPADAT.bit.GPIO31 = 0;     // LED Azul
+
+    // Loop de segundo plano
+    while(1){
+        // 2. Use a variável declarada anteriormente
+        for(count = 0; count < 0x00FFFFFF; count++){
+            // Delay
+        }
+        GpioDataRegs.GPBTOGGLE.bit.GPIO34 = 1; // Pisca LED vermelho
+    }
+}
