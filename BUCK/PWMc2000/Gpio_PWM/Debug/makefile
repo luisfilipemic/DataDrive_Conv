@@ -130,21 +130,21 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXE_OUTPUTS += \
-Gpio_led.out \
+Gpio_PWM.out \
 
 EXE_OUTPUTS__QUOTED += \
-"Gpio_led.out" \
+"Gpio_PWM.out" \
 
 
 # All Target
 all: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
-	@$(MAKE) --no-print-directory -Onone "Gpio_led.out"
+	@$(MAKE) --no-print-directory -Onone "Gpio_PWM.out"
 
 # Tool invocations
-Gpio_led.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
+Gpio_PWM.out: $(OBJS) $(CMD_SRCS) $(GEN_CMDS)
 	@echo 'Building target: "$@"'
 	@echo 'Invoking: C2000 Linker'
-	"D:/TexasInstruments/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/bin/cl2000" -v28 -ml -mt --cla_support=cla1 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu2 --define=CPU1 --define=_LAUNCHXL_F28379D -g --diag_warning=225 --diag_wrap=off --display_error_number --abi=coffabi -z -m"Gpio_led.map" --stack_size=0x200 --warn_sections -i"D:/TexasInstruments/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/lib" -i"D:/TexasInstruments/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/include" --reread_libs --diag_wrap=off --display_error_number --xml_link_info="Gpio_led_linkInfo.xml" --rom_model -o "Gpio_led.out" $(ORDERED_OBJS)
+	"D:/TexasInstruments/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/bin/cl2000" -v28 -ml -mt --cla_support=cla1 --float_support=fpu32 --tmu_support=tmu0 --vcu_support=vcu2 --define=CPU1 --define=_LAUNCHXL_F28379D -g --diag_warning=225 --diag_wrap=off --display_error_number --abi=coffabi -z -m"Gpio_PWM.map" --stack_size=0x200 --warn_sections -i"D:/TexasInstruments/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/lib" -i"D:/TexasInstruments/ccs/tools/compiler/ti-cgt-c2000_22.6.0.LTS/include" --reread_libs --diag_wrap=off --display_error_number --xml_link_info="Gpio_PWM_linkInfo.xml" --rom_model -o "Gpio_PWM.out" $(ORDERED_OBJS)
 	@echo 'Finished building target: "$@"'
 	@echo ' '
 
