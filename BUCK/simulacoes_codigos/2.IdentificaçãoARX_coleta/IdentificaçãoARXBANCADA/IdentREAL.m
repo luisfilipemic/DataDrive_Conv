@@ -1,6 +1,6 @@
 clear, clc
 %Importação dos dados de saída e entrada a partir do CSV
-dados_csv = readmatrix('Dadosensaio_prbs400us.csv');
+dados_csv = readmatrix('Dadosbuck.csv - Dadosbuck.csv.csv');
 
 %Remoção eventuais linhas vazias/NaN no final do arquivo
 dados_csv = dados_csv(~isnan(dados_csv(:,1)), :);
@@ -90,8 +90,7 @@ Gze = tf(Be, Ae, Ts)
 
 %% Ajuste
 
-R2 = 1 - sum((y - yp).^2) / sum((y - mean(y)).^2)
-fit_percentual = (1 - norm(y - yp) / norm(y - mean(y))) * 100
+R2 = 1 - sum((y - yp).^2)/sum((y - mean(y)).^2)
 
 %%
 figure(4)
