@@ -1,6 +1,6 @@
 clear, clc
 %Importação dos dados de saída e entrada a partir do CSV
-dados_csv = readmatrix('Dadosensaio_prbs400us.csv');
+dados_csv = readmatrix('Dadosensaio_prbs300us.csv');
 
 %Remoção eventuais linhas vazias/NaN no final do arquivo
 dados_csv = dados_csv(~isnan(dados_csv(:,1)), :);
@@ -47,6 +47,8 @@ plot(t(1:length(v)), v, 'LineWidth', 1.4);
 ylabel('Saída Real (v)');
 xlabel('Tempo (s)');
 grid on;
+exportgraphics(figure(1), 'saidaentrada.png', 'Resolution', 300);
+
 
 %% Construção matricial - regressores
 Ns = numel(t);

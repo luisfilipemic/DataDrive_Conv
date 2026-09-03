@@ -32,8 +32,27 @@ u = u - mu_u;
 v = v - mu_v;
 y = transpose(v); 
 
+%%
+%Espectros:
+figure(1)
+U = fft(u);
+Y = fft(y);
+MagU = fftshift(abs(U));
+MagY = fftshift(abs(Y));
+
+subplot(211)
+stem(MagU(2:end))
+grid on;
+title('Espectro da Entrada PRBS'); ylabel('|U(f)|');
+
+subplot(212)
+stem(MagY(1:end)); 
+title('Espectro da Saída Real'); ylabel('|Y(f)|'); xlabel('Frequência');
+exportgraphics(figure(1), 'Espectros.png', 'Resolution', 300);
+
+
 %% Relação gráfica de saída e entrada
-figure(1);
+figure(2);
 clf;
 
 subplot(2,1,1);
@@ -48,9 +67,7 @@ ylabel('Saída Real (v)');
 xlabel('Tempo (s)');
 grid on;
 
-
-
-
+exportgraphics(figure(2), 'Entradasaida.png', 'Resolution', 300);
 
 
 %% Construção matricial - regressores
@@ -74,31 +91,41 @@ ys(1:2) = y(1:2);
 yp = M * theta;
 
 %% Comparação ARX VS saída do sistema.
-figure(2)
-plot(t,y)
+figure(3)
+plot(t, y, 'b', 'LineWidth', 1.2)
 hold on
-plot(t,yp,'r')
-legend('ARX','Saída do sistema real');
+plot(t, yp, 'r--', 'LineWidth', 1.2)
+legend('Saída do sistema real', 'ARX (Estimado)', 'Location', 'best');
 hold off
 grid on
 title('ARX VS saída do sistema real');
-exportgraphics(figure(2), 'comparacao_arxREAL.png', 'Resolution', 300);
+xlabel('Tempo (s)'); ylabel('Tensão (V)');
+exportgraphics(figure(3), 'comparacao_arxREAL.png', 'Resolution', 300);
 
 %% Modelo ARX - Discreto 
-
+fprintf('===================Modelo matematico discretizado================')
 Gz = c2d(Gs, Ts ,'matched')
-
+fprintf('==================polos e zeros Gz===============================')
+pole(Gz)
+zero(Gz)
 Be = [0, b1, b2];
 Ae = [1, -a1, -a2]; 
+fprintf('===================Modelo ARX discreto===========================')
 
 Gze = tf(Be, Ae, Ts)
 
+fprintf('==================polos e zeros Gze==============================')
+pole(Gze)
+zero(Gze)
+
 %% Ajuste
+fprintf('=====================Ajuste R2===================================')
 
 R2 = 1 - sum((y - yp).^2)/sum((y - mean(y)).^2)
 
 %%
 e = y - yp; % Cálculo do erro de predição/resíduo
+fprintf('=======================media do erro=============================')
 mean(e)
 figure(4);
 
@@ -109,11 +136,15 @@ title('Residuos / Erro de Predição e(t) ');
 xlabel('Amostras (k)');
 ylabel('Erro');
 
+exportgraphics(figure(4), 'Residuo.png', 'Resolution', 300);
+
+
 %%
 figure(5)
-pzmap(Gz)
-zgrid
+pzmap(Gz, 'b')
+grid on
 hold on
-
-pzmap(Gze)
+pzmap(Gze, 'r--')
+legend('Gz (Teórico)', 'Gze (Estimado)', 'Location', 'best');
 hold off
+exportgraphics(figure(5), 'poloszeros.png', 'Resolution', 300);

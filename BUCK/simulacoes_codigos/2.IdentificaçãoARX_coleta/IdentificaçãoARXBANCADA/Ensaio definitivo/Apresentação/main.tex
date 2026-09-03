@@ -1,0 +1,233 @@
+\documentclass[8pt,aspectratio = 169]{beamer}
+
+\usetheme[sectionpage=none, subsectionpage=progressbar]{metropolis}
+\useoutertheme[subsection=false,footline=authortitle]{miniframes}
+\setbeamertemplate{footline}[frame number]
+\hypersetup{pdfpagemode=FullScreen}
+\hypersetup{pdfpagelayout=SinglePage}
+
+%-------------------------------------------------------
+% INCLUDE PACKAGES
+%-------------------------------------------------------
+
+\usepackage[utf8]{inputenc}
+\usepackage[english,brazil]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\usepackage[num]{abntex2cite}
+\citebrackets[]
+\usepackage{pgfplots}
+\usepackage{amsmath}
+\usepackage{pdflscape}
+\usepackage{afterpage}
+\usepackage{capt-of}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{siunitx} 
+\newcolumntype{T}[1]{S[table-format=#1]}
+\newcommand\mc[1]{\multicolumn{1}{c}{#1}}
+\usepackage{graphicx}
+\usepackage{caption}
+
+%-------------------------------------------------------
+% DEFFINING AND REDEFINING COMMANDS
+%-------------------------------------------------------
+\newcommand{\chref}[2]{
+  \href{#1}{{\usebeamercolor[bg]{Feather}#2}}
+}
+
+%-------------------------------------------------------
+% INFORMATION IN THE TITLE PAGE
+%-------------------------------------------------------
+\title[] 
+{ 
+      \textbf{Identificação de Sistemas Aplicada ao Conversor Buck}
+}
+
+\subtitle[]
+{
+    \textbf{Relatório de Iniciação Científica\\}
+    Eletrônica de Potência e Controle
+}
+
+\author[Luiz Felipe Souza de Lima Silva]
+{ \normalsize     
+      Autor: Luiz Felipe Souza de Lima Silva 
+}
+
+\institute[]
+{\small
+      Universidade Federal do Pará (UFPA) \\
+      Faculdade de Engenharia Elétrica \\
+}
+
+\date{10 de Maio de 2026}
+
+%-------------------------------------------------------
+% THE BODY OF THE PRESENTATION
+%-------------------------------------------------------
+
+\begin{document}
+
+\begin{frame}[plain,noframenumbering] 
+  \titlepage 
+\end{frame}
+
+\begin{frame}{Agenda}{}
+\tableofcontents
+\end{frame}
+
+%-------------------------------------------------------
+\section{Introdução}
+%-------------------------------------------------------
+\begin{frame}{Introdução}{Contextualização e Objetivos}
+\textbf{Contextualização}
+        \begin{itemize}
+             \item A relação entre Machine Learning (ML) e Identificação de Sistemas (SI) evoluiu para uma convergência tecnológica profunda.
+             \item Técnicas de aprendizagem de máquina atuam como ferramentas essenciais para modelar sistemas dinâmicos complexos.
+         \end{itemize}
+\textbf{Objetivos do Trabalho}
+        \begin{itemize}
+            \item Realizar a modelagem e controle de um conversor Buck em sua forma clássica.
+            \begin{itemize}
+                  \item Simular o sistema via Simulink (Power Simscape).
+                  \item Levantar o modelo em caixa-preta a partir de dados reais de entrada e saída.
+             \end{itemize} 
+         \end{itemize} 
+\end{frame}
+
+%-------------------------------------------------------
+\section{Fundamentação Teórica}
+%-------------------------------------------------------
+\begin{frame}{Fundamentação Teórica}{Coleta de Dados e Modelo ARX}
+\begin{block}{Coleta de Variáveis}
+    \begin{itemize}
+         \item \textbf{Entrada ($u(k)$):} Sinal PRBS (Pseudo-Random Binary Sequence) aplicado no gate da chave MOSFET.
+         \item \textbf{Saída ($y(k)$):} Tensão dissipada na carga resistiva.
+    \end{itemize} 
+\end{block}
+
+\begin{block}{Estrutura do Modelo ARX}
+    \begin{itemize}
+         \item O modelo ARX (AutoRegressive with eXogenous input) descreve a relação linear do sistema através de uma equação de diferenças.
+         \item Equação geral: $y(k) = \sum_{i=1}^{n} a_i y(k-i) + \sum_{j=1}^{n} b_j u(k-j)$.
+         \item O vetor de parâmetros $X$ é estimado pelo método dos Mínimos Quadrados: $X = (A^T \cdot A)^{-1} \cdot A^T \cdot Y$, onde $A$ é a matriz de regressores.
+    \end{itemize}
+\end{block}
+\end{frame}
+
+%-------------------------------------------------------
+\section{Análise dos Resultados}
+%-------------------------------------------------------
+\begin{frame}{Análise dos Resultados}{Espectros dos Sinais}
+\begin{figure}[ht]
+	\begin{center}
+    \includegraphics[height=0.65\textheight]{IdentREAL_01.png}
+    \caption{Espectros de magnitude do sinal de entrada e de saída.}
+    \end{center}
+\end{figure}
+\begin{itemize}
+    \item A Transformada de Fourier aplicada aos sinais permite observar as características em frequência do sistema.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Análise dos Resultados}{Relação Entrada-Saída}
+\begin{figure}[ht]
+	\begin{center}
+    \includegraphics[height=0.65\textheight]{IdentREAL_04.png}
+    \caption{Sinal de entrada PRBS (superior) e Saída Real (inferior).}
+    \end{center}
+\end{figure}
+\begin{itemize}
+    \item O sinal PRBS excita de forma diversificada as dinâmicas de operação do conversor Buck.
+\end{itemize} 
+\end{frame}
+
+\begin{frame}{Análise dos Resultados}{Saída Real vs Saída ARX}
+\begin{figure}[ht]
+	\begin{center}
+    \includegraphics[height=0.65\textheight]{IdentREAL_05.png}
+    \caption{Sinal do modelo ARX vs. Saída do sistema real.}
+    \end{center}
+\end{figure}
+\begin{itemize}
+    \item O sinal simulado do modelo ARX acompanha o comportamento da planta quase perfeitamente.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Análise dos Resultados}{Funções de Transferência e Desempenho}
+\textbf{Funções de Transferência Discretas ($50\,\mu\text{s}$)}\\
+\vspace{5pt}
+\begin{itemize}
+    \item \textbf{Modelo Analítico Ideal ($G_z$):}
+    $$ G_z = \frac{1.785z + 1.785}{z^2 - 1.768z + 0.8869} $$
+    \item \textbf{Modelo Estimado ($G_{ze}$):}
+    $$ G_{ze} = \frac{0.01594z - 0.03983}{z^2 - 1.729z + 0.7917} $$
+\end{itemize}
+
+\vspace{10pt}
+\textbf{Validação do Ajuste}\\
+\begin{itemize}
+    \item O Coeficiente de Determinação foi de $R^2 = 0.9741$.
+    \item Indica que o modelo estimado representa $97.41\%$ de todas as variações contidas na saída real da planta física.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Análise dos Resultados}{Análise de Resíduos}
+\begin{figure}[ht]
+	\begin{center}
+    \includegraphics[height=0.65\textheight]{IdentREAL_08.png}
+    \caption{Resíduos / Erro de Predição $e(t)$ ao longo das amostras.}
+    \end{center}
+\end{figure}
+\begin{itemize}
+    \item O erro de predição ($e = y - y_p$) confirmou a precisão do modelo ARX, apresentando média aproximada de $-4.9658 \times 10^{-4}$.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Análise dos Resultados}{Mapeamento de Polos e Zeros}
+\begin{figure}[ht]
+	\begin{center}
+    \includegraphics[height=0.55\textheight]{IdentREAL_09.png}
+    \caption{Mapa de polos e zeros comparativo dos modelos discretos.}
+    \end{center}
+\end{figure}
+\begin{itemize}
+    \item O modelo idealizado possui polos complexos conjugados em $0.8839 \pm 0.3249i$ e um zero em $-1$.
+    \item O modelo estimado ARX possui polos em $0.8646 \pm 0.2100i$ e um zero em $2.4997$.
+\end{itemize}
+\end{frame}
+
+%-------------------------------------------------------
+\section{Conclusão}
+%-------------------------------------------------------
+\begin{frame}{Conclusão}{Considerações Finais}
+  \begin{block}{Conclusão}
+\begin{itemize}
+    \item A estrutura de modelo ARX demonstrou excelente aderência para a identificação linear do conversor Buck operando sob excitação de sinal PRBS.
+    \vspace{5pt}
+    \item O modelo extraído validou a eficácia do método dos mínimos quadrados com uma representatividade de $97.41\%$ (Coeficiente $R^2$).
+    \vspace{5pt}
+    \item As dinâmicas estimadas foram validadas e comparadas com êxito em relação ao sistema matemático ideal.
+\end{itemize}
+  \end{block}
+\end{frame}
+
+%================================================
+%---------------Elementos Pós-textuais
+%================================================
+
+
+\begin{frame}[plain,noframenumbering] 
+  \titlepage 
+\end{frame}
+{\setbeamercolor{palette primary}{fg=black, bg=white}
+\begin{frame}[standout]
+Obrigado! \\
+
+\end{frame}
+} 
+
+\end{document}

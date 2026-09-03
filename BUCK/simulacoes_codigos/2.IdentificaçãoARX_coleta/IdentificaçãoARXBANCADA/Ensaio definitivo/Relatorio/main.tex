@@ -1,0 +1,254 @@
+\documentclass[twocolumn,10pt]{article}
+%\usepackage[utf8]{utf8}
+\usepackage[pt-BR]{babel}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{cite}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{geometry}
+
+\geometry{
+    a4paper,
+    top=20mm,
+    bottom=20mm,
+    left=18mm,
+    right=18mm
+}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{matlabstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=matlabstyle}
+
+\title{\textbf{Relatório de Iniciação Científica -- Identificação Conversor Buck}}
+\author{\textbf{Luiz Felipe Souza de Lima Silva}\\
+Engenharia Elétrica -- UFPA\\
+\textit{Assunto: Conversor Buck}}
+\date{10 de Maio de 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Neste relatório foi disposta toda a simulação e coleta de dados do conversor BUCK, com simulação realizada no software Simulink.
+\\[0.5em]
+\textbf{Palavras-chave:} Buck, Controle, Modelagem, Eletrônica de Potência, Identificação, Simulação, Simulink, Conversor Buck.
+\end{abstract}
+
+\section{Introdução}
+A relação entre Machine Learning (ML) e Identificação de Sistemas (SI) evoluiu de campos distintos para uma convergência tecnológica profunda, onde as técnicas de aprendizagem de máquina são agora ferramentas naturais para a modelação de sistemas dinâmicos complexos \cite{pillonetto2023deep}.
+
+\section{Fundamentação Teórica}
+O procedimento foi composto por uma coleta de dados e posteriormente uma abordagem para criação de um modelo a partir dos dados obtidos.
+
+\subsection{Simulação}
+A simulação foi realizada no software Simulink, onde todas as ferramentas (toolboxes) foram obtidas através da subpasta de aplicação denominada Power Simscape.
+
+O conversor Buck foi montado em sua forma clássica.
+
+\subsection{Coleta de Dados}
+A coleta de dados foi realizada extraindo um conjunto de dados de entrada e saída do sistema real, importando-os para um arquivo ``arquivo.csv'' e posteriormente adicionando-os ao MATLAB.
+
+São elas:
+\begin{itemize}
+    \item \textbf{Saída} ($y(k)$): Tensão dissipada na carga resistiva.
+    \item \textbf{Entrada} ($u(k)$): Sinal PRBS aplicado no gate da chave MOSFET.
+\end{itemize}
+
+\subsection{Modelo}
+A partir da coleta de dados, obtivemos um modelo do sistema partindo da ideia de modelagem por identificação, também conhecida como modelagem em caixa preta, onde o modelo é obtido através de um conjunto de dados de entrada e saída \cite{aguirre2015introducao}.
+
+\subsubsection{A Escolha do Modelo}
+O modelo ARX (do inglês \textit{AutoRegressive with eXogenous input} -- AutoRegressivo com entrada eXógena) é considerado a estrutura fundamental para a identificação de sistemas lineares. Ele descreve a relação entre o sinal de entrada $u(k)$ e a saída $y(k)$ de um sistema através de uma equação de diferenças lineares.
+
+\subsubsection{Estrutura}
+A equação de diferenças do modelo ARX pode ser definida por:
+\begin{equation}
+y(k) = \sum_{i=1}^{n} a_i y(k-i) + \sum_{j=1}^{n} b_j u(k-j)
+\end{equation}
+
+Para o modelo obtido através do conjunto de dados, considerando dois coeficientes de entrada e saída, teremos:
+\begin{equation}
+y(k) = a_1 y(k-1) + a_2 y(k-2) + b_1 u(k-1) + b_2 u(k-2)
+\end{equation}
+
+\subsection{Matriz dos Regressores}
+Temos que, para $k \ge 3$:
+\begin{align*}
+y(3) &= a_1 y(2) + a_2 y(1) + b_1 u(2) + b_2 u(1) \\
+y(4) &= a_1 y(3) + a_2 y(2) + b_1 u(3) + b_2 u(2) \\
+&\;\;\vdots \\
+y(k) &= a_1 y(k-1) + a_2 y(k-2) + b_1 u(k-1) + b_2 u(k-2)
+\end{align*}
+
+Por definição, a partir do sistema linear, podemos gerar a seguinte representação matricial $A \cdot X = Y$:
+
+\begin{equation}
+\underbrace{
+\begin{bmatrix} 
+y(3) \\ 
+y(4) \\ 
+\vdots \\ 
+y(N) 
+\end{bmatrix}
+}_{Y}
+=
+\underbrace{
+\begin{bmatrix} 
+y(2) & y(1) & u(2) & u(1) \\
+y(3) & y(2) & u(3) & u(2) \\
+\vdots & \vdots & \vdots & \vdots \\
+y(N-1) & y(N-2) & u(N-1) & u(N-2)
+\end{bmatrix}
+}_{A}
+\underbrace{
+\begin{bmatrix} 
+a_1 \\ 
+a_2 \\ 
+b_1 \\ 
+b_2 
+\end{bmatrix}
+}_{X}
+\end{equation}
+
+Em que $A$ é denotada como a matriz dos regressores.
+
+Isolando $X$ através do método dos mínimos quadrados ($A \cdot X = Y$), obtemos:
+\begin{equation}
+X = (A^T \cdot A)^{-1} \cdot A^T \cdot Y
+\end{equation}
+
+Com o algoritmo dos mínimos quadrados executado, basta encontrar os coeficientes da matriz $X$.
+
+\subsection{Sinal de Entrada $u(k)$}
+Para o sinal de entrada, é aplicado um ruído branco, gerando um sinal PRBS de entrada.
+
+\subsection{Sinal de Saída $y(k)$}
+O sinal de saída é coletado como a resposta do modelo. No caso do conversor Buck, a resposta é o nível de tensão na carga.
+
+Portanto, obtém-se a função de transferência discreta:
+\begin{equation}
+G(q) = \frac{b_1 q^{-1} + b_2 q^{-2}}{1 - a_1 q^{-1} - a_2 q^{-2}}
+\end{equation}
+
+O modelo discreto obtido pode ser comparado com um modelo ideal.
+
+\section{Resultados e Discussão}
+
+\subsection{Espectros dos Sinais}
+Para analisar a composição em frequência dos sinais utilizados, foi gerado o espectro de magnitude do sinal de entrada PRBS e do sinal de saída. A Figura \ref{fig:espectros} apresenta o resultado da Transformada de Fourier aplicada aos sinais, permitindo observar as características em frequência do sistema.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{IdentREAL_01.png}
+    \caption{Espectros de magnitude do sinal de entrada e de saída.}
+    \label{fig:espectros}
+\end{figure}
+
+\subsection{Relação Entrada-Saída}
+O processo de identificação utilizou um sinal PRBS para excitar de forma diversificada as dinâmicas de operação do conversor Buck. A Figura \ref{fig:saidaentrada} ilustra a relação temporal dos dados coletados, com a entrada apresentando pulsos ruidosos ($u$) e a resposta real refletindo a variação correspondente do nível de tensão de saída ($v$).
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{IdentREAL_03.png}
+    \caption{Ensaio de Identificação do Conversor Buck: Sinal de entrada PRBS (superior) e Saída Real (inferior).}
+    \label{fig:saidaentrada}
+\end{figure}
+
+\subsection{Saída Real vs Saída ARX}
+Com base nos dados coletados, estimou-se a matriz de parâmetros do modelo ARX via Mínimos Quadrados. A Figura \ref{fig:comparacao} comprova graficamente o grau de precisão do modelo paramétrico frente ao comportamento da planta. O sinal simulado (ARX) acompanha quase perfeitamente as variações apresentadas no sistema real validado.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{IdentREAL_05.png}
+    \caption{Gráfico de comparação temporal: Sinal do modelo ARX vs. Saída do sistema real.}
+    \label{fig:comparacao}
+\end{figure}
+
+\subsection{Funções de Transferência ($G_z$ e $G_{ze}$) e Ajuste ($R^2$)}
+Após o processamento algorítmico num tempo de amostragem de $50\,\mu\text{s}$, extraiu-se a função de transferência de tempo discreto idealizada ($G_z$) baseada em modelagem matemática e a nova função de transferência discreta estimada ($G_{ze}$) gerada pelo algoritmo, dadas por:
+
+\begin{equation}
+G_z = \frac{1.785z + 1.785}{z^2 - 1.768z + 0.8869}
+\end{equation}
+
+\begin{equation}
+G_{ze} = \frac{0.01594z - 0.03983}{z^2 - 1.729z + 0.7917}
+\end{equation}
+
+Para verificar analiticamente a coerência de aproximação desse modelo linear de caixa-preta ($G_{ze}$), obteve-se um Coeficiente de Determinação ($R^2$) equivalente a:
+\begin{equation}
+R^2 = 0.9741
+\end{equation}
+
+Esse valor comprova matematicamente a fidelidade visual observada na Figura \ref{fig:comparacao}, indicando que o modelo ARX extraído consegue representar aproximadamente $97.41\%$ de todas as variações contidas na saída real da planta física original após o alinhamento dos dados.
+
+\subsection{Análise de Resíduos}
+A análise residual do sistema confirma a precisão do modelo ARX gerado. O erro de predição ($e = y - y_p$) possui uma média de $-4.9658 \times 10^{-4}$. O comportamento temporal desse erro é exposto na Figura \ref{fig:residuo}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{IdentREAL_07.png}
+    \caption{Resíduos / Erro de Predição $e(t)$ ao longo das amostras.}
+    \label{fig:residuo}
+\end{figure}
+
+\subsection{Mapeamento de Polos e Zeros}
+O mapa de polos e zeros do sistema discreto também foi levantado e comparado entre a função de transferência analítica ($G_z$) e a estimada ($G_{ze}$). 
+\begin{itemize}
+    \item O modelo idealizado $G_z$ possui polos complexos conjugados em $0.8839 \pm 0.3249i$ e um zero em $-1$.
+    \item O modelo estimado $G_{ze}$ possui polos em $0.8646 \pm 0.2100i$ e um zero em $2.4997$.
+\end{itemize}
+A Figura \ref{fig:poloszeros} expõe graficamente essa disposição.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\linewidth]{IdentREAL_09.png}
+    \caption{Mapa de polos e zeros (Pole-Zero Map) comparativo dos modelos discretos.}
+    \label{fig:poloszeros}
+\end{figure}
+
+\section{Conclusão}
+\begin{center}
+    \textit{falta escrever}
+\end{center}
+
+\begin{thebibliography}{9}
+
+\bibitem{pillonetto2023deep}
+G.~Pillonetto, A.~Aravkin, D.~Gedon, L.~Ljung, A.~H.~Ribeiro, e T.~B.~Schön,
+``Deep networks for system identification: A survey,''
+\textit{Automatica}, 2023.
+
+\bibitem{aguirre2015introducao}
+L.~A.~Aguirre,
+\textit{Introdução à Identificação de Sistemas: Técnicas Lineares e Não-Lineares Aplicadas a Sistemas Reais},
+4ª~ed.\ Belo Horizonte: Editora UFMG, 2015.
+
+\end{thebibliography}
+
+\end{document}

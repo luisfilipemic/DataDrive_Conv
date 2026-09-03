@@ -12,15 +12,16 @@
 clear, clc
 %Parametrização 
 Fs = 20000;
-Ts = 2.0e-5;
+Ts = 5.0e-5;
 d =  0.3;
 Vs = 30;
 C = 0.000041666667;
 L = 0.000470;
-R = 1.0;
+R = 10.0;
 num = Vs/(C*L);
 den = [1,1/(C*R) , 1/(C*L)];
 Gs = tf(num,den);
+
 
 %% Importação dos dados de saída e entrada
 load("DataIdent.mat")
@@ -28,6 +29,21 @@ Nd = 200;
 t = DadosBuck(1,1:end-Nd);
 u = DadosBuck(2,Nd:end-1);
 v = DadosBuck(3,Nd:end-1);
+
+
+%%
+%U = fft(u);
+%Y = fft(v)
+%MagU = abs(U)
+%MagY = abs(Y)
+%subplot(211)
+%stem(MagU(2:600))
+%grid
+%subplot(212)
+%stem(MagY(2:600))
+
+
+
 %%
 
 
@@ -83,15 +99,25 @@ exportgraphics(figure(2), 'comparacao_arx.png', 'Resolution', 300);
 
  %% Modelo ARX - Discreto 
 
-[B, A] = c2d(Gs, Ts ,'zoh');
+Gz = c2d(Gs, Ts ,'matched')
 
 Be = [0, b1, b2];
 Ae = [1, -a1, -a2];
 
-Gz = tf(B, A, Ts)
+%Gz = tf(B, A, Ts)
 Gze = tf(Be, Ae, Ts)
 
+figure(3)
+pzmap(Gz)
+zgrid
+hold on
+
+pzmap(Gze)
+hold off
+
+
 %%
+figure(4)
 figure('Position', [100, 100, 800, 500]);
 plot(t, ys, 'b', 'LineWidth', 1.2); hold on;
 plot(t, y, 'r', 'LineWidth', 1.2);
