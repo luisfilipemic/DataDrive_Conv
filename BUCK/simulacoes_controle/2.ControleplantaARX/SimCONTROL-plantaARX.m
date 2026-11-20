@@ -1,72 +1,43 @@
-clear, clc
-s = tf('s');
-
-L = 0.000525;
-C1 = 0.000041666667;
-R = 1;
-U1 = 30;
+clear, clc, close all
 
 %%
-%Planta/Modelo Função de transferencia 
-%Planta Obtida pela identificação ARX
-% Modelo discreto ARX identificados
 
-numz = [0.2589 0.225];       % Numerador
-denz = [1 -1.602 0.6187];    % Denominador
-Ts = 2.0e-5;                 % Período de amostragem (20 microsegundos)
+b1 = 1.3780;
+b2 = 0.9447;
+a1 = 1.2262;
+a2 = -0.3007;
 
-% Criação da função de transferência discreta
-Gz = tf(numz, denz, Ts);
-
-% Conversão para contínuo usando Tustin (bilinear)
-Gs_tustin = d2c(Gz, 'tustin');
-
-% Exibir resultados
-disp('Função discreta G(z):');
-Gz
-
-disp('Função contínua G(s) via Tustin:');
-Gs_tustin
-
-numS = [-0.01053 -1.397e04 1.502e09];   % Coeficientes do numerador s
-denS = [1 2.368e04 5.185e07];           % Coeficientes do denominador s
-
-controlSystemDesigner(Gs_tustin)
+Be = [0, b1, b2];
+Ae = [1, -a1, -a2];
+Gze = tf(Be, Ae, Ts)
 
 %%
-%Importando os ganho controlador PI
-controlador_pid = pid(C);
+rltool(Gze);
+%%
+controlador_pi = pid(C);
 
-gainP = controlador_pid.Kp
-gainI = controlador_pid.Ki
-gainD = controlador_pid.Kd
+gainP = controlador_pi.Kp
+gainI = controlador_pi.Ki
+
 
 %% 
-%Função discreta Gc controlador:
-Gc = gainP + gainI/s + gainD * s;
+%Função de transferencia controlador:
 
-Ts = 2.0e-5;
-
-Gdc = c2d(Gc, Ts, 'tustin');
-
-Gdc
+Gc = C 
 
 %%
-%graficos PI para resposta em degrau:
+syms u(k) e(k)
 
-modelo = 'controladorARX.slx'; 
+bk_1 = gainP + (gainI*Ts)
+bk_2 = gainP
+u_k = u(k-1) + e(k)*(bk_1) - (bk_2)*e(k-1)
 
-load_system(modelo);
+%% Resposta ao degrau
 
-simOut = sim(modelo);
-Dados = simOut.get('DadosPI');
-Saida = Dados(:,1);        
-Entrada = Dados(:,2);     
+stepplot(IOTransfer_r2y)
 
-figure(1)
-plot(Saida)
 
-figure(2)
-plot(Entrada)
+%% LGR
 
-%%
+rlocusplot(LoopTransfer_C)
+
